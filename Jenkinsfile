@@ -43,7 +43,7 @@ pipeline {
     post {
         success {
             emailaddress {
-                to 'youremail@example.com'
+                to 'Jenkins202020@hotmail.com'
                 body 'Build and tests successful! See logs for details.'
                 subject 'CI/CD Pipeline - Build Success'
                 attachLog true
@@ -51,7 +51,7 @@ pipeline {
         }
         failure {
             emailaddress {
-                to 'youremail@example.com'
+                to 'Jenkins202020@hotmail.com'
                 body 'Build or tests failed! See logs for details.'
                 subject 'CI/CD Pipeline - Build Failed'
                 attachLog true
