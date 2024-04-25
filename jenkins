@@ -1,10 +1,14 @@
 pipeline {
   agent any
 
+ agent any
+
   triggers {
     pollSCM(
-      'H/5 * * * *', // Trigger build every 5 minutes (adjust as needed)
-      branches: ['main'] 
+      // Trigger build every 5 minutes (adjust as needed)
+      'H/5 * * * *',
+      // Specify branch to monitor for changes
+      branches: ['main']
     )
   }
 
@@ -58,7 +62,7 @@ pipeline {
   // Configure email notification after Security Scan stage (modify for success notification if needed)
   post {
     failure {
-      emailaddress( 
+      emailaddress(
         to: 'Jenkins202020@hotmail.com',
         subject: 'Security Scan Failed - ${JOB_NAME}',
         body: 'Security scan failed! See logs for details.',
