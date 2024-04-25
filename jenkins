@@ -1,69 +1,69 @@
 pipeline {
-    agent any
-    
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building the code...'
-                // Specify the build automation tool (e.g., Maven)
-            }
-        }
-        
-        stage('Unit and Integration Tests') {
-            steps {
-                echo 'Running unit tests...'
-                // Specify the test automation tool for unit tests
-                
-                echo 'Running integration tests...'
-                // Specify the test automation tool for integration tests
-            }
-        }
-        
-        stage('Code Analysis') {
-            steps {
-                echo 'Running code analysis...'
-                // Research and select a code analysis tool integrated with Jenkins
-            }
-        }
-        
-        stage('Security Scan') {
-            steps {
-                echo 'Performing security scan...'
-                // Research and select a security scanning tool integrated with Jenkins
-            }
-        }
-        
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Deploying to staging server...'
-                // Specify the deployment tool (e.g., AWS CLI, Ansible)
-            }
-        }
-        
-        stage('Integration Tests on Staging') {
-            steps {
-                echo 'Running integration tests on staging...'
-                // Specify the test automation tool for staging environment
-            }
-        }
-        
-        stage('Deploy to Production') {
-            steps {
-                echo 'Deploying to production server...'
-                // Specify the deployment tool (e.g., AWS CLI, Ansible)
-            }
-        }
+  agent any
+
+  triggers {
+    pollSCM(
+      'H/5 * * * *', // Trigger build every 5 minutes (adjust as needed)
+      branches: ['master'] // Change 'master' to your branch name
+    )
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Building code using Maven (example)'
+        sh 'mvn clean package' 
+      }
     }
-    
-    post {
-        success {
-            echo 'Sending success email notification...'
-            // Configure email notification for success status with logs as attachment
-        }
-        
-        failure {
-            echo 'Sending failure email notification...'
-            // Configure email notification for failure status with logs as attachment
-        }
+    stage('Unit and Integration Tests') {
+      steps {
+        echo 'Running unit tests with JUnit (example)'
+        sh 'mvn test' // Replace with your unit test execution command
+        echo 'Running integration tests with Selenium (example)'
+        sh 'mvn verify -Dtest=integration-tests' 
+      }
     }
+    stage('Code Analysis') {
+      steps {
+        echo 'Analyzing code with SonarQube (example)'
+      
+      }
+    }
+    stage('Security Scan') {
+      steps {
+        echo 'Scanning code for vulnerabilities with Snyk (example)'
+  
+      }
+    }
+    stage('Deploy to Staging') {
+      steps {
+        echo 'Deploying application to staging server (AWS EC2 example)'
+        // Deployment steps using AWS tools or plugins 
+      }
+    }
+    stage('Integration Tests on Staging') {
+      steps {
+        echo 'Running integration tests on staging environment (example)'
+        // Script to access staging environment and run integration tests 
+      }
+    }
+    stage('Deploy to Production') {
+      steps {
+        echo 'Deploying application to production server (AWS EC2 example)'
+        // Deployment steps using AWS tools or plugins 
+      }
+    }
+  }
+
+  // Configure email notification after Security Scan stage (modify for success notification if needed)
+  post {
+    failure {
+      emailaddress( 
+        to: 'Jenkins202020@hotmail.com',
+        subject: 'Security Scan Failed - ${JOB_NAME}',
+        body: 'Security scan failed! See logs for details.',
+        attachLog: true
+      )
+    }
+  }
 }
