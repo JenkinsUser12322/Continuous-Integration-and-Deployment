@@ -66,6 +66,9 @@ pipeline {
         body: 'Security scan failed! See logs for details.',
         attachLog: true
       )
-    }
+    
   }
+}
+}
+}
 }
