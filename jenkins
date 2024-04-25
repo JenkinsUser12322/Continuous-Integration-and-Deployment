@@ -1,73 +1,65 @@
 pipeline {
- agent any
+    agent any
 
-  triggers {
+    triggers {
         pollSCM('H/5 * * * *') // Poll SCM every 5 minutes
     }
 
-    options {
-        skipDefaultCheckout() // Skip default checkout to customize SCM behavior
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building code using Maven (example)'
+                sh 'mvn clean package'
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                echo 'Running unit tests with JUnit (example)'
+                sh 'mvn test' // Replace with your unit test execution command
+                echo 'Running integration tests with Selenium (example)'
+                sh 'mvn verify -Dtest=integration-tests'
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                echo 'Analyzing code with SonarQube (example)'
+                // Add code analysis steps here
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo 'Scanning code for vulnerabilities with Snyk (example)'
+                // Add security scan steps here
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+                echo 'Deploying application to staging server (AWS EC2 example)'
+                // Add deployment steps for staging environment here
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging environment (example)'
+                // Add integration test steps on staging environment here
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying application to production server (AWS EC2 example)'
+                // Add deployment steps for production environment here
+            }
+        }
     }
 
-  stages {
-    stage('Build') {
-      steps {
-        echo 'Building code using Maven (example)'
-        sh 'mvn clean package' 
-      }
+    post {
+        failure {
+            emailext (
+                to: 'Jenkins202020@hotmail.com',
+                subject: "Security Scan Failed - ${JOB_NAME}",
+                body: "Security scan failed! See logs for details.",
+                attachLog: true
+            )
+        }
     }
-    stage('Unit and Integration Tests') {
-      steps {
-        echo 'Running unit tests with JUnit (example)'
-        sh 'mvn test' // Replace with your unit test execution command
-        echo 'Running integration tests with Selenium (example)'
-        sh 'mvn verify -Dtest=integration-tests' 
-      }
-    }
-    stage('Code Analysis') {
-      steps {
-        echo 'Analyzing code with SonarQube (example)'
-      
-      }
-    }
-    stage('Security Scan') {
-      steps {
-        echo 'Scanning code for vulnerabilities with Snyk (example)'
-  
-      }
-    }
-    stage('Deploy to Staging') {
-      steps {
-        echo 'Deploying application to staging server (AWS EC2 example)'
-        // Deployment steps using AWS tools or plugins 
-      }
-    }
-    stage('Integration Tests on Staging') {
-      steps {
-        echo 'Running integration tests on staging environment (example)'
-        // Script to access staging environment and run integration tests 
-      }
-    }
-    stage('Deploy to Production') {
-      steps {
-        echo 'Deploying application to production server (AWS EC2 example)'
-        // Deployment steps using AWS tools or plugins 
-      }
-    }
-  
-
-  // Configure email notification after Security Scan stage (modify for success notification if needed)
-
-  post {
-    failure {
-      emailaddress(
-        to: 'Jenkins202020@hotmail.com',
-        subject: 'Security Scan Failed - ${JOB_NAME}',
-        body: 'Security scan failed! See logs for details.',
-        attachLog: true
-      )
-    
-  }
-}
-}
 }
