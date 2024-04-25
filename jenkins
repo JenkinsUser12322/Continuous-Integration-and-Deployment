@@ -1,13 +1,11 @@
 pipeline {
  agent any
 
-  triggers {
-    pollSCM(
-      // Trigger build every 5 minutes (adjust as needed)
-      'H/5 * * * *',
-      // Specify branch to monitor for changes
-      branches: ['main']
-    )
+    triggers {
+    // Trigger build every 5 minutes (adjust as needed)
+    pollSCM 'H/5 * * * *'
+ 
+    branches ['main']
   }
 
   stages {
@@ -58,6 +56,8 @@ pipeline {
   }
 
   // Configure email notification after Security Scan stage (modify for success notification if needed)
+  post {
+    failure {
   post {
     failure {
       emailaddress(
