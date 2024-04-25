@@ -1,12 +1,13 @@
 pipeline {
  agent any
 
-    triggers {
-    // Trigger build every 5 minutes (adjust as needed)
-    pollSCM 'H/5 * * * *'
- 
-    branches ['main']
-  }
+  triggers {
+        pollSCM('H/5 * * * *') // Poll SCM every 5 minutes
+    }
+
+    options {
+        skipDefaultCheckout() // Skip default checkout to customize SCM behavior
+    }
 
   stages {
     stage('Build') {
