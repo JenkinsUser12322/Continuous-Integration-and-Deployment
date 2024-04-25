@@ -4,7 +4,7 @@ pipeline {
   triggers {
     pollSCM(
       'H/5 * * * *', // Trigger build every 5 minutes (adjust as needed)
-      branches: ['master'] // Change 'master' to your branch name
+      branches: ['main'] 
     )
   }
 
