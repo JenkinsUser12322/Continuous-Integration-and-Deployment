@@ -57,8 +57,7 @@ pipeline {
   }
 
   // Configure email notification after Security Scan stage (modify for success notification if needed)
-  post {
-    failure {
+
   post {
     failure {
       emailaddress(
