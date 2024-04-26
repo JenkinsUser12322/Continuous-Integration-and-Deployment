@@ -1,57 +1,77 @@
 pipeline {
-    agent any
-
-    triggers {
-        pollSCM('H/5 * * * *') // Poll SCM every 5 minutes
+  agent any
+  
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Building the code using Maven'
+        // Actual build commands here
+      }
     }
-
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building code using Maven (example)'
-                sh 'mvn clean package'
-            }
-        }
-        stage('Unit and Integration Tests') {
-            steps {
-                echo 'Running unit tests with JUnit (example)'
-                sh 'mvn test' // Replace with your unit test execution command
-                echo 'Running integration tests with Selenium (example)'
-                sh 'mvn verify -Dtest=integration-tests'
-            }
-        }
-        stage('Code Analysis') {
-            steps {
-                echo 'Analyzing code with SonarQube (example)'
-                // Add code analysis steps here
-            }
-        }
-        stage('Security Scan') {
-            steps {
-                echo 'Scanning code for vulnerabilities with Snyk (example)'
-                // Add security scan steps here
-            }
-        }
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Deploying application to staging server (AWS EC2 example)'
-                // Add deployment steps for staging environment here
-            }
-        }
-        stage('Integration Tests on Staging') {
-            steps {
-                echo 'Running integration tests on staging environment (example)'
-                // Add integration test steps on staging environment here
-            }
-        }
-        stage('Deploy to Production') {
-            steps {
-                echo 'Deploying application to production server (AWS EC2 example)'
-                // Add deployment steps for production environment here
-            }
-        }
+    
+    stage('Unit and Integration Tests') {
+      steps {
+        echo 'Running unit tests'
+        // Execute unit tests using a test automation tool
+        echo 'Running integration tests'
+        // Execute integration tests using a test automation tool
+      }
     }
-
-
+    
+    stage('Code Analysis') {
+      steps {
+        echo 'Running code analysis using SonarQube'
+        // Analyze the code using SonarQube or any other code analysis tool
+      }
+    }
+    
+    stage('Security Scan') {
+      steps {
+        echo 'Performing security scan using OWASP ZAP'
+        // Perform a security scan using OWASP ZAP or any other security scanning tool
+      }
+    }
+    
+    stage('Deploy to Staging') {
+      steps {
+        echo 'Deploying the application to the staging server'
+        // Deploy the application to the staging environment (e.g., AWS EC2 instance)
+      }
+    }
+    
+    stage('Integration Tests on Staging') {
+      steps {
+        echo 'Running integration tests on the staging environment'
+        // Execute integration tests on the staging environment
+      }
+    }
+    
+    stage('Deploy to Production') {
+      steps {
+        echo 'Deploying the application to the production server'
+        // Deploy the application to the production environment (e.g., AWS EC2 instance)
+      }
+    }
+  }
+  
+  post {
+    always {
+      emailext subject: "Pipeline Notification - ${currentBuild.fullDisplayName}",
+                body: "Pipeline status: ${currentBuild.result}\n\nPlease check the console output for more details.",
+                to: "Jenkins202020@hotmail.com",
+                attachLog: true
+    }
+    
+    success {
+      emailext subject: "Pipeline Notification - Successful",
+                body: "The pipeline has completed successfully.",
+                to: "Jenkins202020@hotmail.com"
+    }
+    
+    failure {
+      emailext subject: "Pipeline Notification - Failed",
+                body: "The pipeline has failed.",
+                to: "Jenkins202020@hotmail.com"
+    }
+  }
 }
-
