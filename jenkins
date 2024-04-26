@@ -5,51 +5,50 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building the code using Maven'
-        // Actual build commands here
+       
       }
     }
     
     stage('Unit and Integration Tests') {
       steps {
         echo 'Running unit tests'
-        // Execute unit tests using a test automation tool
-        echo 'Running integration tests'
-        // Execute integration tests using a test automation tool
+               echo 'Running integration tests'
+       
       }
     }
     
     stage('Code Analysis') {
       steps {
         echo 'Running code analysis using SonarQube'
-        // Analyze the code using SonarQube or any other code analysis tool
+       
       }
     }
     
     stage('Security Scan') {
       steps {
         echo 'Performing security scan using OWASP ZAP'
-        // Perform a security scan using OWASP ZAP or any other security scanning tool
+       
       }
     }
     
     stage('Deploy to Staging') {
       steps {
         echo 'Deploying the application to the staging server'
-        // Deploy the application to the staging environment (e.g., AWS EC2 instance)
+       
       }
     }
     
     stage('Integration Tests on Staging') {
       steps {
         echo 'Running integration tests on the staging environment'
-        // Execute integration tests on the staging environment
+     
       }
     }
     
     stage('Deploy to Production') {
       steps {
         echo 'Deploying the application to the production server'
-        // Deploy the application to the production environment (e.g., AWS EC2 instance)
+
       }
     }
   }
@@ -58,20 +57,20 @@ pipeline {
     always {
       emailext subject: "Pipeline Notification - ${currentBuild.fullDisplayName}",
                 body: "Pipeline status: ${currentBuild.result}\n\nPlease check the console output for more details.",
-                to: "c.builbing@gmail.com",
+                to: "ahmed.saber.2088@gmail.com",
                 attachLog: true
     }
     
     success {
       emailext subject: "Pipeline Notification - Successful",
                 body: "The pipeline has completed successfully.",
-                to: "c.builbing@gmail.com"
+                to: "ahmed.saber.2088@gmail.com"
     }
     
     failure {
       emailext subject: "Pipeline Notification - Failed",
                 body: "The pipeline has failed.",
-                to: "c.builbing@gmail.com"
+                to: "ahmed.saber.2088@gmail.com"
     }
   }
 }
