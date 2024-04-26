@@ -52,15 +52,15 @@ pipeline {
         }
     }
 
-// post {
- //   failure {
- //     emailaddress(
- //       to: 'Jenkins202020@hotmail.com',
-  //      subject: 'Security Scan Failed - ${JOB_NAME}',
-  //      body: 'Security scan failed! See logs for details.',
-  //      attachLog: true
-  //    )
- //   }
-//  }
+ post {
+    failure {
+     emailaddress(
+       to: 'Jenkins202020@hotmail.com',
+       subject: 'Security Scan Failed - ${JOB_NAME}',
+       body: 'Security scan failed! See logs for details.',
+        attachLog: true
+      )
+    }
+  }
 }
 
