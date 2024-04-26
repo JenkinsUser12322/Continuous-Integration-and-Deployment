@@ -58,20 +58,20 @@ pipeline {
     always {
       emailext subject: "Pipeline Notification - ${currentBuild.fullDisplayName}",
                 body: "Pipeline status: ${currentBuild.result}\n\nPlease check the console output for more details.",
-                to: "ahmed.saber.2088@gmail.com",
+                to: "c.builbing@gmail.com",
                 attachLog: true
     }
     
     success {
       emailext subject: "Pipeline Notification - Successful",
                 body: "The pipeline has completed successfully.",
-                to: "ahmed.saber.2088@gmail.com"
+                to: "c.builbing@gmail.com"
     }
     
     failure {
       emailext subject: "Pipeline Notification - Failed",
                 body: "The pipeline has failed.",
-                to: "ahmed.saber.2088@gmail.com"
+                to: "c.builbing@gmail.com"
     }
   }
 }
